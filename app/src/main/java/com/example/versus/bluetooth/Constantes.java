@@ -1,5 +1,10 @@
 package com.example.versus.bluetooth;
 
+/**
+ * Clase de constantes, utilizadas en las clases AcceptThread, ConnectThread y ConnectedThread
+ * para indicar el estado de la aplicacion.
+ */
+
 public class Constantes {
     public static final int CAMBIAR_ESTADO = 1;
     public static final int ESTADO_CONECTANDO = 2;
