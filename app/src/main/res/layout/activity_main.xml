@@ -80,7 +80,6 @@
                 android:layout_width="194dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:text="Name"
                 android:ems="10"
                 android:id="@+id/txtEnviar"
                 android:layout_weight="0.02" />
@@ -109,7 +108,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:text="Name"
                 android:ems="10"
                 android:id="@+id/txtRecibido"
                 android:layout_weight="0.93" />

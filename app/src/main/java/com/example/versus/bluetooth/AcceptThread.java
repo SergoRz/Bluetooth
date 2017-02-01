@@ -72,5 +72,4 @@ public class AcceptThread extends Thread {
         }
         mHandler.sendMessage(msg);
     }
-
 }

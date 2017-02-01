@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-
 public class ConnectedThread extends Thread{
     private final BluetoothSocket mmSocket;
     private final InputStream mmInStream;
