@@ -169,8 +169,13 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
         }
     }
 
+    /**
+     * Metodo que se encarga de lanzar el hilo ConnectedThread para estableciendo la conexion
+     * @param socket Socket del bluetooth
+     * @param device Dispositivo Cliente
+     */
     public synchronized void Conectar(BluetoothSocket socket, BluetoothDevice device) {
-        // Comienza la conexión!!
+        //Se inicia el hilo ConnectedThread
         mConnectedThread = new ConnectedThread(socket, mHandler);
         mConnectedThread.start();
     }
