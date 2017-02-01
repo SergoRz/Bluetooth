@@ -52,7 +52,7 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
         btAdapter = BluetoothAdapter.getDefaultAdapter();
         if (btAdapter== null) {
             // El dispositivo no soporta Bluetooth
-            Toast.makeText(this,R.string.sinbt,Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"El dispositivo no soporta bluetooth",Toast.LENGTH_LONG).show();
         }
         else
         if (!btAdapter.isEnabled()) {
@@ -88,10 +88,10 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
         if(requestCode==HABILITA_BT)
             if(resultCode==RESULT_OK) {
                 // El dispositivo activó el bluetooth
-                Toast.makeText(this, R.string.activado, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "El dispositivo activo el bluetooth", Toast.LENGTH_LONG).show();
                 mActivado = true;
             }else{
-                Toast.makeText(this, R.string.noactivado, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "No se ha activado el bluetooth", Toast.LENGTH_LONG).show();
             }
     }
 
@@ -131,15 +131,15 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_servidor_bluetooth);
-        checkbox=(CheckBox)findViewById(R.id.chkEncuentraDispositivos);
+        setContentView(R.layout.activity_main);
+        checkbox=(CheckBox)findViewById(R.id.cbVinculadas);
         checkbox.setOnCheckedChangeListener(this);
-        lista_dispositivos=(ListView)findViewById(R.id.lista_dispositivos);
+        lista_dispositivos=(ListView)findViewById(R.id.lvDispositivos);
         lista_dispositivos.setOnItemClickListener(this);
         arrayDispositivos=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
-        txtEstado=(TextView)findViewById(R.id.txtEstado);
+        txtEstado=(TextView)findViewById(R.id.tvEstado);
         txtEnviar=(TextView)findViewById(R.id.txtEnviar);
-        txtRecibir=(TextView)findViewById(R.id.txtRecibir);
+        txtRecibir=(TextView)findViewById(R.id.tvRecibido);
         estado=Constantes.SIN_CONECTAR;
 
         // Registra el receptor de descubrir dispositivos
@@ -262,19 +262,19 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
         estado=i;
         switch(i){
             case Constantes.ESTADO_CONECTADO:
-                txtEstado.setText(getResources().getString(R.string.conectado)+":"+extra);
+                txtEstado.setText("Conectado: "+extra);
                 break;
             case Constantes.ESTADO_CONECTANDO:
-                txtEstado.setText(getResources().getString(R.string.conectando));
+                txtEstado.setText("Conectando");
                 break;
             case Constantes.SIN_CONECTAR:
-                txtEstado.setText(getResources().getString(R.string.sinconexion));
+                txtEstado.setText("Sin conectar");
                 break;
             case Constantes.MENSAJE_RECIBIDO:
-                txtEstado.setText(getResources().getString(R.string.recibido));
+                txtEstado.setText("Mensaje recibido");
                 break;
             case Constantes.MENSAJE_ENVIADO:
-                txtEstado.setText(getResources().getString(R.string.enviado));
+                txtEstado.setText("Mensaje enviado");
                 break;
         }
 
