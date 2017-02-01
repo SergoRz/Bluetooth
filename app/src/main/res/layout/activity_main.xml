@@ -86,7 +86,7 @@
                 android:layout_weight="0.02" />
 
             <Button
-                android:onClick="Enviar"
+                android:onClick="enviarMensaje"
                 android:text=">>"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"

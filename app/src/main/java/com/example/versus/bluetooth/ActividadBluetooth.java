@@ -175,8 +175,13 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
         mConnectedThread.start();
     }
 
+    /**
+     * Metodo que se encarga de iniciar el dispositivo como Servidor
+     * @param v Boton Iniciar Servidor
+     */
     public void IniciarServidor(View v) {
-        if (btAdapter != null) {
+        if (btAdapter != null) { //Si existe el adaptador
+            //Se lanza el hilo AcceptThread
             mAcceptThread = new AcceptThread(btAdapter, mHandler, this);
             mAcceptThread.start();
         } else {
@@ -186,7 +191,6 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
 
     /**
      * Metodo que se encarga de iniciar un dispositivo como Cliente
-     *
      * @param v Boton Iniciar cliente
      */
     public void IniciarCliente(View v) {
@@ -223,9 +227,9 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
      * Metodo que se encarga de guardar un dispositivo cuando ha sido clicado
      *
      * @param adapterView Adaptador de la lista de dispositivos
-     * @param view        Vista de la ListView
-     * @param i           Item seleccionado
-     * @param l           Longitud
+     * @param view Vista de la ListView
+     * @param i Item seleccionado
+     * @param l Longitud
      */
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -234,12 +238,10 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
 
     /**
      * Metodo que se encarga de enviar un mensaje escribiendolo en el OutputStream del socket
-     *
-     * @param mensaje Mensaje que se desea enviar.
+     * @param v boton >>
      */
-    private void enviarMensaje(View v) {
+    public void enviarMensaje(View v) {
         String mensaje = txtEnviar.getText().toString();
-
         if (estado == Constantes.SIN_CONECTAR) { //Si no esta conectado..
             Toast.makeText(this, "conecta primero a un servidor!", Toast.LENGTH_SHORT).show();
             return;
@@ -256,7 +258,7 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
      * Metodo que se encarga de actualizar la interfaz de la aplicacion para poder visualizar en
      * que estado se encuentra la aplicacion
      *
-     * @param i     Mensaje de la calse Constantes que se quiere notificar
+     * @param i Mensaje de la calse Constantes que se quiere notificar
      * @param extra Informacion extra que se quiere añadir, se utiliza para indicar el nombre del
      *              dispositivo con el que se ha establecido la conexion
      */
