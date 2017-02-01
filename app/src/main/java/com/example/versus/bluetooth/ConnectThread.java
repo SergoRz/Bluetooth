@@ -4,7 +4,9 @@ import android.app.Notification;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -38,6 +40,7 @@ public class ConnectThread extends Thread{
         mmSocket = tmp;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void run(){
         //Se cancela la busqueda de dispositivos para no ralentizar la conexion
         mbtAdapter.cancelDiscovery();
@@ -62,6 +65,7 @@ public class ConnectThread extends Thread{
         } catch (IOException e){}
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void EnviarCambioEstado(int i, BluetoothDevice device){
         Notification.MessagingStyle.Message msg = mHandler.obtainMessage(Constantes.CAMBIAR_ESTADO, i, -1);
         //Si hay dispositivo a enviar, se envia como un Bundle

@@ -1,18 +1,31 @@
 package com.example.versus.bluetooth;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
-import android.os.Handler;
+
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
-/**
- * Created by Versus on 01/02/2017.
- */
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+
+
 public class ActividadBluetooth extends AppCompatActivity {
+    BluetoothAdapter btAdapter;
+    AcceptThread mAcceptThread;
+    ConnectedThread mConnectedThread;
+    ConnectThread mConnectThread;
+    BluetoothDevice dispositivoConectado;
+    EditText txtEnviar;
+    EditText txtRecibir;
+    int estado, seleccionado;
+    ListView lista_dispositivos;
     //Cuando se pulse el boton iniciar servidor
     public void IniciarServidor(View v){
         if(btAdapter != null){
@@ -40,29 +53,44 @@ public class ActividadBluetooth extends AppCompatActivity {
     }
 
     public void IniciarCliente(View v){
-        if(seleccionado=-1){
+        if(seleccionado == -1){
             Toast.makeText(this,"Elige un dispositivo al que conectarse primero", Toast.LENGTH_SHORT).show();
         } else{
             String x = lista_dispositivos.getItemAtPosition(seleccionado).toString();
-            String address = x.subString(x.length() - 17);
+            String address = x.substring(x.length() - 17);
             dispositivoConectado = btAdapter.getRemoteDevice(address);
 
             if(dispositivoConectado!=null){
-                mConnectThread = new ConnecThread(dispositivoConectado, btAdapter, mHandler, this);
-                mConnecThread.start();
+                mConnectThread = new ConnectThread(dispositivoConectado, btAdapter, mHandler, this);
+                mConnectThread.start();
             }else{
                 Toast.makeText(this,"No pude obtener enlace al dispositivo", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private synchronized void Conectar(BluetoothSocket socket, BluetoothDevice device){
+    public synchronized void Conectar(BluetoothSocket socket, BluetoothDevice device){
         //Comienza la conexion
         mConnectedThread = new ConnectedThread(socket, mHandler);
         mConnectedThread.start();
     }
 
     private final Handler mHandler = new Handler(){
+        @Override
+        public void publish(LogRecord record) {
+
+        }
+
+        @Override
+        public void flush() {
+
+        }
+
+        @Override
+        public void close() throws SecurityException {
+
+        }
+
         public void handleMessage(Message msg){
             switch (msg.what){
                 case Constantes.CAMBIAR_ESTADO:
@@ -78,10 +106,13 @@ public class ActividadBluetooth extends AppCompatActivity {
                     byte[] readBuf = (byte[]) msg.obj;
                     //Construye una cadena de caracterer a partir de los caracteres del buffer
                     String readMessage = new String(readBuf, o, msg.arg1);
-                    txtRecibir.setTest(readMessage);
+                    txtRecibir.setText(readMessage);
                     CambiarEstado(Constantes.MENSAJE_RECIBIDO,"");
                     break;
             }
+        }
+
+        private void CambiarEstado(int arg1, String s) {
         }
     };
 }
