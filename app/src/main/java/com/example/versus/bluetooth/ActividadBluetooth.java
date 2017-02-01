@@ -125,6 +125,7 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
      * vinculados y añadirlos al ListView.
      * @param compoundButton CheckBox que ejecuta este evento
      * @param checked Estado actual del CheckBox
+     *
      */
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
