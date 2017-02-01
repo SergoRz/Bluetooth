@@ -283,9 +283,9 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
         }
     }
 
-
-    //Clases Anónimas
-
+    //----------------------------------------
+    // CLASES ANONIMAS
+    //----------------------------------------
     /**
      * Handler que recibe la información de los Threads
      * Actualiza el txtEstado de la interfaz informando al usuario del estado de la aplicacion,
@@ -315,15 +315,17 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
         }
     };
 
-    // Crea un BroadcastReceiver para ACTION_FOUND
+    /**
+     * Se crea un BroadcastReceiver para cuando se encuentre un dispositivo (ACTION_FOUND)
+     */
     public final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            // Cuando se descubre un dispositivo
+            // Cuando se encuentra un dispositivo
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                // Obtener el BluetoothDevice del Intent
+                //Se obtiene el dispositivo bluetooth del intent el BluetoothDevice del Intent
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                // Añadir el nombre y su dirección a la lista
+                //Se añade el dispositivo al array de dispositivos
                 arrayDispositivos.add(device.getName() + "\n" + device.getAddress());
             }
 
