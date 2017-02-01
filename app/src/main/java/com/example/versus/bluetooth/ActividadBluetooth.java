@@ -118,6 +118,15 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
             }
     }
 
+    /**
+     * Método que se ejecuta cuando cambia el estado del del CheckBox.
+     * Si se ha marcado el CheckBox este método va a limpiar el array de dispositivos, despues
+     * va a comprobar si esta buscando dispositivos, en este caso reiniciara la busqueda.
+     * Si se ha desmarcado el CheckBox lo que va a hacer va a ser buscar los dispositivos
+     * vinculados y añadirlos al ListView.
+     * @param compoundButton CheckBox que ejecuta este evento
+     * @param checked Estado actual del CheckBox
+     */
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
         if (btAdapter != null) {
@@ -142,6 +151,11 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
         }
     }
 
+    /**
+     * Método que se encarga de obtener los dispositivos vinculados del nuestro dispositivo,
+     * obtiene una coleccion de estos dispositivos y si tiene minimo uno los añadira al array
+     * de dispositivos.
+     */
     public void EncuentraVinculados() {
         //Obtiene los dispositivos vinculados
         Set<BluetoothDevice> vinculados = btAdapter.getBondedDevices();
@@ -159,10 +173,6 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
         // Comienza la conexión!!
         mConnectedThread = new ConnectedThread(socket, mHandler);
         mConnectedThread.start();
-    }
-
-    public void Enviar(View v) {
-        enviarMensaje(txtEnviar.getText().toString());
     }
 
     public void IniciarServidor(View v) {
@@ -227,7 +237,9 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
      *
      * @param mensaje Mensaje que se desea enviar.
      */
-    private void enviarMensaje(String mensaje) {
+    private void enviarMensaje(View v) {
+        String mensaje = txtEnviar.getText().toString();
+
         if (estado == Constantes.SIN_CONECTAR) { //Si no esta conectado..
             Toast.makeText(this, "conecta primero a un servidor!", Toast.LENGTH_SHORT).show();
             return;
