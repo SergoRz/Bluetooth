@@ -51,7 +51,7 @@ public class ConnectedThread extends Thread{
     }
 
     public void EnviarCambioEstado(int i){
-        Notification.MessagingStyle.Message msg = mHandler.obtainMessage(Constantes.CAMBIAR_ESTADO, i, -1);
+        Message msg = mHandler.obtainMessage(Constantes.CAMBIAR_ESTADO, i, -1);
         mHandler.sendMessage(msg);
     }
 
