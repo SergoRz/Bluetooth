@@ -6,8 +6,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
-
-
+import android.os.Message;
 import java.io.IOException;
 import java.util.UUID;
 import java.util.logging.Handler;

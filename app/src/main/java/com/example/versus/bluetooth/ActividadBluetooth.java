@@ -2,16 +2,15 @@ package com.example.versus.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
-
+import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
@@ -26,6 +25,11 @@ public class ActividadBluetooth extends AppCompatActivity {
     EditText txtRecibir;
     int estado, seleccionado;
     ListView lista_dispositivos;
+
+    public void onCreate(Bundle savedInstanceState){
+
+    }
+
     //Cuando se pulse el boton iniciar servidor
     public void IniciarServidor(View v){
         if(btAdapter != null){
@@ -105,7 +109,7 @@ public class ActividadBluetooth extends AppCompatActivity {
                 case Constantes.MENSAJE_RECIBIDO:
                     byte[] readBuf = (byte[]) msg.obj;
                     //Construye una cadena de caracterer a partir de los caracteres del buffer
-                    String readMessage = new String(readBuf, o, msg.arg1);
+                    String readMessage = new String(readBuf, 0, msg.arg1);
                     txtRecibir.setText(readMessage);
                     CambiarEstado(Constantes.MENSAJE_RECIBIDO,"");
                     break;

@@ -1,18 +1,11 @@
 package com.example.versus.bluetooth;
 
-import android.app.Notification;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-
+import android.os.Message;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.logging.Handler;
-
-/**
- * Created by EmilioCB on 01/02/2017.
- */
 
 public class ConnectedThread extends Thread{
     private final BluetoothSocket mmSocket;
