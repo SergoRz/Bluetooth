@@ -170,7 +170,7 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
     }
 
     /**
-     * Metodo que se encarga de lanzar el hilo ConnectedThread para estableciendo la conexion
+     * Metodo que se encarga de lanzar el hilo ConnectedThread para establecer la conexion
      * @param socket Socket del bluetooth
      * @param device Dispositivo Cliente
      */
