@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Handler;
 
@@ -20,6 +21,7 @@ public class ActividadBluetooth extends AppCompatActivity {
     BluetoothDevice dispositivoConectado;
     EditText txtEnviar;
     EditText txtRecibir;
+    TextView tvEstado;
     int estado, seleccionado;
     ListView lista_dispositivos;
 
@@ -86,19 +88,20 @@ public class ActividadBluetooth extends AppCompatActivity {
                         CambiarEstado(msg.arg1, "");
                     break;
                 case Constantes.MENSAJE_ENVIADO:
-                        CambiarEstado(Constantes.MENSAJE_ENVIADO,"");
+                        CambiarEstado(Constantes.MENSAJE_ENVIADO,"Mensaje enviado");
                     break;
                 case Constantes.MENSAJE_RECIBIDO:
                     byte[] readBuf = (byte[]) msg.obj;
                     //Construye una cadena de caracterer a partir de los caracteres del buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     txtRecibir.setText(readMessage);
-                    CambiarEstado(Constantes.MENSAJE_RECIBIDO,"");
+                    CambiarEstado(Constantes.MENSAJE_RECIBIDO,"Mensaje recibido");
                     break;
             }
         }
 
         private void CambiarEstado(int arg1, String s) {
+            tvEstado.setText(s);
         }
     };
 }
