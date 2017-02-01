@@ -30,6 +30,7 @@
                 android:layout_weight="1" />
 
             <Button
+                android:onClick="IniciarBluetooth"
                 android:text="Iniciar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -104,7 +105,7 @@
                 android:id="@+id/tvRecibido" />
 
             <EditText
-                android:editable="false"
+                android:enabled="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"

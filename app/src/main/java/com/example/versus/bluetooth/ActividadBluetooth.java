@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,13 +25,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Set;
-import java.util.UUID;
 
 
-public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedChangeListener,ListView.OnItemClickListener{
+public class ActividadBluetooth extends AppCompatActivity implements CheckBox.OnCheckedChangeListener,ListView.OnItemClickListener{
     private int estado=Constantes.SIN_CONECTAR;
     private final static int HABILITA_BT = 1;
     BluetoothAdapter btAdapter;
@@ -139,7 +137,7 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
         arrayDispositivos=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
         txtEstado=(TextView)findViewById(R.id.tvEstado);
         txtEnviar=(TextView)findViewById(R.id.txtEnviar);
-        txtRecibir=(TextView)findViewById(R.id.tvRecibido);
+        txtRecibir=(TextView)findViewById(R.id.txtRecibido);
         estado=Constantes.SIN_CONECTAR;
 
         // Registra el receptor de descubrir dispositivos
@@ -147,25 +145,6 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
         registerReceiver(mReceiver, filter);
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.servidor_bluetooth, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     public synchronized void Conectar(BluetoothSocket socket, BluetoothDevice device) {
         // Comienza la conexión!!
