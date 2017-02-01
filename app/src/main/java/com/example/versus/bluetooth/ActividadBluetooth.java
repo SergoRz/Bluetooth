@@ -6,14 +6,11 @@ import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
-
+import android.os.Handler;
 
 public class ActividadBluetooth extends AppCompatActivity {
     BluetoothAdapter btAdapter;
@@ -80,21 +77,6 @@ public class ActividadBluetooth extends AppCompatActivity {
     }
 
     private final Handler mHandler = new Handler(){
-        @Override
-        public void publish(LogRecord record) {
-
-        }
-
-        @Override
-        public void flush() {
-
-        }
-
-        @Override
-        public void close() throws SecurityException {
-
-        }
-
         public void handleMessage(Message msg){
             switch (msg.what){
                 case Constantes.CAMBIAR_ESTADO:
