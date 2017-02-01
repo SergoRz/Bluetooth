@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.os.Message;
 import java.io.IOException;
 import java.util.UUID;
-import java.util.logging.Handler;
+import android.os.Handler;
 
 /**
  * Created by Versus on 01/02/2017.

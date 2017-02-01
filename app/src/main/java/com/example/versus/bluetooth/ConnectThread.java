@@ -6,10 +6,11 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
 import java.io.IOException;
 import java.util.UUID;
-import java.util.logging.Handler;
+import android.os.Handler;
 
 /**
  * Created by EmilioCB on 01/02/2017.
@@ -66,7 +67,7 @@ public class ConnectThread extends Thread{
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void EnviarCambioEstado(int i, BluetoothDevice device){
-        Notification.MessagingStyle.Message msg = mHandler.obtainMessage(Constantes.CAMBIAR_ESTADO, i, -1);
+        Message msg = mHandler.obtainMessage(Constantes.CAMBIAR_ESTADO, i, -1);
         //Si hay dispositivo a enviar, se envia como un Bundle
         if(device != null){
             Bundle bundle = new Bundle();

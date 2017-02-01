@@ -1,11 +1,12 @@
 package com.example.versus.bluetooth;
 
 import android.bluetooth.BluetoothSocket;
+import android.os.Handler;
 import android.os.Message;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.logging.Handler;
+
 
 public class ConnectedThread extends Thread{
     private final BluetoothSocket mmSocket;
