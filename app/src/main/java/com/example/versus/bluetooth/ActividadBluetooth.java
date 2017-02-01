@@ -19,6 +19,7 @@ import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.Set;
 
 /**
@@ -171,14 +172,23 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
         }
     }
 
+    /**
+     * Metodo que se encarga de iniciar un dispositivo como Cliente
+     * @param v Boton Iniciar cliente
+     */
     public void IniciarCliente(View v){
+        //Si no se ha escogido un dispositivo al cual conectarse..
         if(seleccionado==-1)
             Toast.makeText(this, "elige un dispositivo al que conectarte primero", Toast.LENGTH_LONG).show();
-        else {
+        else { //Si se ha escogido..
+            //Se recoge el nombre del dispositivo
             String x = lista_dispositivos.getItemAtPosition(seleccionado).toString();
+            //Se obtiene la direccion
             String address = x.substring(x.length() - 17);
-            dispositivoConectado=btAdapter.getRemoteDevice(address);
-            if(dispositivoConectado!=null) {
+            //Se establece la conexion con el dispositivo
+            dispositivoConectado = btAdapter.getRemoteDevice(address);
+            if(dispositivoConectado != null) { //Si se ha establecido la conexion correctamente..
+                //Se lanza el hilo ConnectThread
                 mConnectThread = new ConnectThread(dispositivoConectado, btAdapter, mHandler, this);
                 mConnectThread.start();
             }
@@ -187,57 +197,50 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
         }
     }
 
+    /**
+     * Metodo que se ejecuta al cerrar la aplicacion
+     * Se encarga de parar la recepcion de dispositivos conectados por bluetooth
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mReceiver);
     }
 
+    /**
+     * Metodo que se encarga de guardar un dispositivo cuando ha sido clicado
+     * @param adapterView Adaptador de la lista de dispositivos
+     * @param view Vista de la ListView
+     * @param i Item seleccionado
+     * @param l Longitud
+     */
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         seleccionado = i;
     }
 
+    /**
+     * Metodo que se encarga de enviar un mensaje escribiendolo en el OutputStream del socket
+     * @param mensaje Mensaje que se desea enviar.
+     */
     private void enviarMensaje(String mensaje) {
-
-        if (estado==Constantes.SIN_CONECTAR) {
+        if (estado==Constantes.SIN_CONECTAR) { //Si no esta conectado..
             Toast.makeText(this, "conecta primero a un servidor!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Comprobamos si hay algo que enviar
         if (mensaje.length() > 0) {
-            // Obtener
+            // Se envia el mensaje deseado
             byte[] send = mensaje.getBytes();
             mConnectedThread.write(send);
         }
     }
-    public void CambiarEstado(int i, String extra){
-        estado=i;
-        switch(i){
-            case Constantes.ESTADO_CONECTADO:
-                txtEstado.setText("Conectado: " + extra);
-                break;
-            case Constantes.ESTADO_CONECTANDO:
-                txtEstado.setText("Conectando");
-                break;
-            case Constantes.SIN_CONECTAR:
-                txtEstado.setText("Sin conectar");
-                break;
-            case Constantes.MENSAJE_RECIBIDO:
-                txtEstado.setText("Mensaje recibido");
-                break;
-            case Constantes.MENSAJE_ENVIADO:
-                txtEstado.setText("Mensaje enviado");
-                break;
-        }
-
-    }
-
-    //Clases anónimas
 
     /**
-     * The Handler que recibe la información de los Threads
+     * Handler que recibe la información de los Threads
+     * Actualiza el txtEstado de la interfaz informando al usuario del estado de la aplicacion,
+     * dependiendo del mensaje que recibe de los Threads
      */
     private final Handler mHandler = new Handler() {
         @Override
@@ -263,6 +266,32 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
         }
     };
 
+    /**
+     * Metodo que se encarga de actualizar la interfaz de la aplicacion para poder visualizar en
+     * que estado se encuentra la aplicacion
+     * @param i Mensaje de la calse Constantes que se quiere notificar
+     * @param extra Informacion extra que se quiere añadir, se utiliza para indicar el nombre del
+     *              dispositivo con el que se ha establecido la conexion
+     */
+    public void CambiarEstado(int i, String extra){
+        estado=i;
+        switch(i){
+            case Constantes.ESTADO_CONECTADO:
+                txtEstado.setText("Conectado: "+extra);
+                break;
+            case Constantes.ESTADO_CONECTANDO:
+                txtEstado.setText("Conectando");
+                break;
+            case Constantes.SIN_CONECTAR:
+                txtEstado.setText("Sin conectar");
+                break;
+            case Constantes.MENSAJE_RECIBIDO:
+                txtEstado.setText("Mensaje recibido");
+                break;
+            case Constantes.MENSAJE_ENVIADO:
+                txtEstado.setText("Mensaje enviado");
+                break;
+        }
     // Crea un BroadcastReceiver para ACTION_FOUND
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
