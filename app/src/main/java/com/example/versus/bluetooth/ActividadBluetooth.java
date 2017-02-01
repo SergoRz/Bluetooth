@@ -100,7 +100,6 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
 
     /**
      * Método que obtiene la respuesta del usuario cuando se le solicita activar el Bluetooth.
-     *
      * @param requestCode Codigo de la solicitud
      * @param resultCode  Codigo de la respuesta
      * @param data Intent que se lanza para recibir dicha respuesta
