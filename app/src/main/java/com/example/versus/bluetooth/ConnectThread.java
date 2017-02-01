@@ -71,6 +71,5 @@ public class ConnectThread extends Thread{
             msg.setData(bundle);
         }
         mHandler.sendMessage(msg);
-
     }
 }
