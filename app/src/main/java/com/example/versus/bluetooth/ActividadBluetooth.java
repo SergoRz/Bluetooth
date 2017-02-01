@@ -94,7 +94,7 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
             }
         }
 
-        //
+
         onCheckedChanged(checkbox, checkbox.isChecked());
     }
 
