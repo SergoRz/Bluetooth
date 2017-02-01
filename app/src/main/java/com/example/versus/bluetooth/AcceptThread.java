@@ -20,14 +20,14 @@ public class AcceptThread extends Thread {
     private static final UUID MY_UUID = UUID.fromString("fa87c0d0-afac-11de-8a39-111111111111");
     private final static String NOMBRE_SERVICIO="miAppBluetooth";
 
-    private final BluetoothServerSocket mmServerSocket;
+    private BluetoothServerSocket mmServerSocket;
 
     private Handler mHandler;
     private ActividadBluetooth actividad;
 
     /**
      * Constructor de la clase AcceptThread
-     * @param btAdapter Adaptador utilizaso para conectar con el bluetooth
+     * @param btAdapter Adaptador utilizado para conectar con el bluetooth
      * @param h Cola de mensajes
      * @param act Clase principal
      */
@@ -49,6 +49,7 @@ public class AcceptThread extends Thread {
         // seguir escuchando hasta que ocurra una excepción o se acepte un socket
         while (true) {
             try {
+                //Se notifica del cambio de estado al Handler
                 EnviarCambioEstado(Constantes.ESTADO_CONECTANDO, null);
                 socket = mmServerSocket.accept(); //Se acepta conexion del cliente si es solicitada
             } catch (IOException e) {

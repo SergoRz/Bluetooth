@@ -1,7 +1,8 @@
 package com.example.versus.bluetooth;
 
 /**
- * Created by Versus on 01/02/2017.
+ * Clase de constantes, utilizadas en las clases AcceptThread, ConnectThread y ConnectedThread
+ * para indicar el estado de la aplicacion.
  */
 
 public class Constantes {

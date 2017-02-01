@@ -22,7 +22,9 @@ import android.widget.Toast;
 
 import java.util.Set;
 
-
+/**
+ * Clase que
+ */
 public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedChangeListener,ListView.OnItemClickListener{
     private int estado=Constantes.SIN_CONECTAR;
     private final static int HABILITA_BT = 1;
