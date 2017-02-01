@@ -94,7 +94,7 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
             }
         }
 
-        //
+        //Si se cambia el estado del CheckBox
         onCheckedChanged(checkbox, checkbox.isChecked());
     }
 
@@ -103,7 +103,7 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
      *
      * @param requestCode Codigo de la solicitud
      * @param resultCode  Codigo de la respuesta
-     * @param data        Intent que se lanza para recibir dicha respuesta
+     * @param data Intent que se lanza para recibir dicha respuesta
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -119,37 +119,40 @@ public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedCh
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        if (btAdapter != null)
-            if (b) {
+    public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+        if (btAdapter != null) {
+            //Si se ha marcado el CheckBox
+            if (checked) {
+                //Limpia el array de dispositivos
                 arrayDispositivos.clear();
-                Descubre();
-            } else {
-                VerDispositivos();
+
+                //Si esta busando, cancela la busqueda
+                if (btAdapter.isDiscovering()) {
+                    btAdapter.cancelDiscovery();
+                }
+                //Vuelve a iniciar la busqueda
+                btAdapter.startDiscovery();
+
+            } else { //Si se ha desmarcado
+                //Busca los dispositivos vinculados
+                EncuentraVinculados();
+                //Rellena el ListView
+                lista_dispositivos.setAdapter(arrayDispositivos);
             }
+        }
     }
 
-    public void VerDispositivos() {
-        EncuentraEmparejados();
-        lista_dispositivos.setAdapter(arrayDispositivos);
-    }
-
-    public void EncuentraEmparejados() {
-        Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
-        // Si hay dispositivos emparejados
-        if (pairedDevices.size() > 0) {
-            // Iteramos por los dispositivos emparejados
-            for (BluetoothDevice device : pairedDevices) {
+    public void EncuentraVinculados() {
+        //Obtiene los dispositivos vinculados
+        Set<BluetoothDevice> vinculados = btAdapter.getBondedDevices();
+        // Si hay dispositivos vinculados
+        if (vinculados.size() > 0) {
+            // Se recorren los dispositivos vinculados
+            for (BluetoothDevice device : vinculados) {
+                //Se añaden al array
                 arrayDispositivos.add(device.getName() + "\n" + device.getAddress());
             }
         }
-    }
-
-    public void Descubre() {
-        if (btAdapter.isDiscovering()) {
-            btAdapter.cancelDiscovery();
-        }
-        btAdapter.startDiscovery();
     }
 
     public synchronized void Conectar(BluetoothSocket socket, BluetoothDevice device) {
