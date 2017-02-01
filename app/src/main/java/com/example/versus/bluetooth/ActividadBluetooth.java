@@ -26,7 +26,13 @@ public class ActividadBluetooth extends AppCompatActivity {
     ListView lista_dispositivos;
 
     public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
+        txtEnviar = (EditText) findViewById(R.id.txtEnviar);
+        txtRecibir = (EditText) findViewById(R.id.txtRecibido);
+        tvEstado = (TextView) findViewById(R.id.tvEstado);
+        lista_dispositivos = (ListView) findViewById(R.id.lvDispositivos);
     }
 
     //Cuando se pulse el boton iniciar servidor

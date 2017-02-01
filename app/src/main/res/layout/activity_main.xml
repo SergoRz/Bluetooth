@@ -80,7 +80,7 @@
                 android:inputType="textPersonName"
                 android:text="Name"
                 android:ems="10"
-                android:id="@+id/etTextoEnv"
+                android:id="@+id/txtEnviar"
                 android:layout_weight="0.02" />
 
             <Button
@@ -107,7 +107,7 @@
                 android:inputType="textPersonName"
                 android:text="Name"
                 android:ems="10"
-                android:id="@+id/etTextoRec"
+                android:id="@+id/txtRecibido"
                 android:layout_weight="0.93" />
         </LinearLayout>
 
