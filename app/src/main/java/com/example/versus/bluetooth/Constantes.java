@@ -1,9 +1,5 @@
 package com.example.versus.bluetooth;
 
-/**
- * Created by Versus on 01/02/2017.
- */
-
 public class Constantes {
     public static final int CAMBIAR_ESTADO = 1;
     public static final int ESTADO_CONECTANDO = 2;

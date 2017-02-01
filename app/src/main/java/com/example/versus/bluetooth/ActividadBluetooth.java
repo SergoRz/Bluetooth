@@ -3,7 +3,6 @@ package com.example.versus.bluetooth;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,10 +11,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,24 +22,45 @@ import android.widget.Toast;
 
 import java.util.Set;
 
+/**
+ * Clase ActividadBluetooth
+ * Esta clase es la Actividad principal de la aplicación
+ */
+public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedChangeListener, ListView.OnItemClickListener{
 
-public class ActividadBluetooth extends AppCompatActivity implements CheckBox.OnCheckedChangeListener,ListView.OnItemClickListener{
-    private int estado=Constantes.SIN_CONECTAR;
+    private int estado = Constantes.SIN_CONECTAR;
     private final static int HABILITA_BT = 1;
-    BluetoothAdapter btAdapter;
-    public boolean mActivado=false; //por defecto no está activado
-    ArrayAdapter<String> arrayDispositivos;
-    ListView lista_dispositivos;
-    int seleccionado=-1;
-    BluetoothDevice dispositivoConectado;
-    BluetoothSocket socket;
-    TextView txtEstado,txtEnviar,txtRecibir;
-    CheckBox checkbox;
-
+    private BluetoothAdapter btAdapter;
+    private boolean mActivado=false; //por defecto no está activado
+    private ArrayAdapter<String> arrayDispositivos;
+    private ListView lista_dispositivos;
+    private int seleccionado=-1;
+    private BluetoothDevice dispositivoConectado;
+    private BluetoothSocket socket;
+    private TextView txtEstado,txtEnviar,txtRecibir;
+    private CheckBox checkbox;
     private AcceptThread mAcceptThread;
     private ConnectThread mConnectThread;
     private ConnectedThread mConnectedThread;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        checkbox=(CheckBox)findViewById(R.id.cbVinculadas);
+        checkbox.setOnCheckedChangeListener(this);
+        lista_dispositivos=(ListView)findViewById(R.id.lvDispositivos);
+        lista_dispositivos.setOnItemClickListener(this);
+        arrayDispositivos=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
+        txtEstado=(TextView)findViewById(R.id.tvEstado);
+        txtEnviar=(TextView)findViewById(R.id.txtEnviar);
+        txtRecibir=(TextView)findViewById(R.id.txtRecibido);
+        estado=Constantes.SIN_CONECTAR;
+
+        // Registra el receptor de descubrir dispositivos
+        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(mReceiver, filter);
+    }
 
     public void IniciarBluetooth(View v){
         btAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -62,7 +78,7 @@ public class ActividadBluetooth extends AppCompatActivity implements CheckBox.On
         else{
             mActivado=true;
         }
-        onCheckedChanged(checkbox,checkbox.isChecked());
+        onCheckedChanged(checkbox, checkbox.isChecked());
     }
 
     public void VerDispositivos(){
@@ -126,25 +142,6 @@ public class ActividadBluetooth extends AppCompatActivity implements CheckBox.On
         }
         btAdapter.startDiscovery();
     }
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        checkbox=(CheckBox)findViewById(R.id.cbVinculadas);
-        checkbox.setOnCheckedChangeListener(this);
-        lista_dispositivos=(ListView)findViewById(R.id.lvDispositivos);
-        lista_dispositivos.setOnItemClickListener(this);
-        arrayDispositivos=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
-        txtEstado=(TextView)findViewById(R.id.tvEstado);
-        txtEnviar=(TextView)findViewById(R.id.txtEnviar);
-        txtRecibir=(TextView)findViewById(R.id.txtRecibido);
-        estado=Constantes.SIN_CONECTAR;
-
-        // Registra el receptor de descubrir dispositivos
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(mReceiver, filter);
-    }
-
 
     public synchronized void Conectar(BluetoothSocket socket, BluetoothDevice device) {
         // Comienza la conexión!!
@@ -192,8 +189,6 @@ public class ActividadBluetooth extends AppCompatActivity implements CheckBox.On
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         seleccionado=i;
     }
-
-
 
     private void enviarMensaje(String mensaje) {
 

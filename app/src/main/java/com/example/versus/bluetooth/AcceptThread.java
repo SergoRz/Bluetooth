@@ -12,12 +12,9 @@ import android.os.Message;
 import java.io.IOException;
 import java.util.UUID;
 
-/**
- * Created by ilm on 20/12/2014.
- */
+
 public class AcceptThread extends Thread {
-    private static final UUID MY_UUID =
-            UUID.fromString("fa87c0d0-afac-11de-8a39-111111111111");
+    private static final UUID MY_UUID = UUID.fromString("fa87c0d0-afac-11de-8a39-111111111111");
     private final static String NOMBRE_SERVICIO="miAppBluetooth";
 
     private final BluetoothServerSocket mmServerSocket;
@@ -25,9 +22,9 @@ public class AcceptThread extends Thread {
     private Handler mHandler;
     private ActividadBluetooth actividad;
 
-    public AcceptThread(BluetoothAdapter btAdapter, Handler h,ActividadBluetooth act) {
-        mHandler=h;
-        actividad=act;
+    public AcceptThread(BluetoothAdapter btAdapter, Handler h, ActividadBluetooth act) {
+        mHandler = h;
+        actividad = act;
         BluetoothServerSocket tmp = null;
         try {
             tmp = btAdapter.listenUsingRfcommWithServiceRecord(NOMBRE_SERVICIO, MY_UUID);
@@ -56,8 +53,6 @@ public class AcceptThread extends Thread {
             }
         }
     }
-
-
 
     public void cancel() {
         try {

@@ -11,18 +11,23 @@ import java.io.IOException;
 import java.util.UUID;
 
 /**
- * Created by ilm on 20/12/2014.
+ *
  */
 public class ConnectThread extends Thread {
-    private static final UUID MY_UUID =
-            UUID.fromString("fa87c0d0-afac-11de-8a39-111111111111");
-    private final static String NOMBRE_SERVICIO="miAppBluetooth";
-    private final BluetoothSocket mmSocket;
-    private final BluetoothDevice mmDevice;
+    private static final UUID MY_UUID = UUID.fromString("fa87c0d0-afac-11de-8a39-111111111111");
+    private BluetoothSocket mmSocket;
+    private BluetoothDevice mmDevice;
     private BluetoothAdapter mbtAdapter;
     private ActividadBluetooth actividad;
     private Handler mHandler;
 
+    /**
+     *
+     * @param device
+     * @param btAdapter
+     * @param h
+     * @param act
+     */
     public ConnectThread(BluetoothDevice device,BluetoothAdapter btAdapter,Handler h,ActividadBluetooth  act) {
 
         mbtAdapter=btAdapter;
@@ -33,12 +38,14 @@ public class ConnectThread extends Thread {
 
         // Obtener un BluetoothSocket para conectar con el BluetoothDevice
         try {
-            tmp = device.createInsecureRfcommSocketToServiceRecord(MY_UUID);
-            //tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
+            mmSocket = device.createInsecureRfcommSocketToServiceRecord(MY_UUID);
         } catch (IOException e) { }
         mmSocket = tmp;
     }
 
+    /**
+     *
+     */
     public void run() {
         // Se cancela la búsqueda de dispositivos para no ralentizar la conexión
         mbtAdapter.cancelDiscovery();
@@ -58,12 +65,20 @@ public class ConnectThread extends Thread {
         }
     }
 
+    /**
+     *
+     */
     public void cancel() {
         try {
             mmSocket.close();
         } catch (IOException e) { }
     }
 
+    /**
+     *
+     * @param i
+     * @param device
+     */
     public void EnviarCambioEstado(int i,BluetoothDevice device){
         Message msg = mHandler.obtainMessage(Constantes.CAMBIAR_ESTADO,i,-1);
         //Si hay dispositivo a enviar, se envia como Bundle
