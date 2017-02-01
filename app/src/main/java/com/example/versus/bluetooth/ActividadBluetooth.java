@@ -3,7 +3,6 @@ package com.example.versus.bluetooth;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,10 +11,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,7 +23,7 @@ import android.widget.Toast;
 import java.util.Set;
 
 
-public class ActividadBluetooth extends AppCompatActivity implements CheckBox.OnCheckedChangeListener,ListView.OnItemClickListener{
+public class ActividadBluetooth extends Activity implements CheckBox.OnCheckedChangeListener,ListView.OnItemClickListener{
     private int estado=Constantes.SIN_CONECTAR;
     private final static int HABILITA_BT = 1;
     BluetoothAdapter btAdapter;
@@ -47,6 +42,7 @@ public class ActividadBluetooth extends AppCompatActivity implements CheckBox.On
 
 
     public void IniciarBluetooth(View v){
+
         btAdapter = BluetoothAdapter.getDefaultAdapter();
         if (btAdapter== null) {
             // El dispositivo no soporta Bluetooth
